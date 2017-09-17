@@ -31,8 +31,8 @@ public:
 	void RegisterGraphicsDevice(CGraphicsDevice* device) { m_pGraphicsDevice = device; }
 
 private:
-	void TranslateRenderingRegion(const CVector3 position, SDL_Rect* pRect);
-	CVector3 GetEntInterpolatedPosition(CEntityBase* ent);
+	void TranslateRenderingRegion(const CVector position, SDL_Rect* pRect);
+	CVector GetEntInterpolatedPosition(CEntityBase* ent);
 
 private:
 	CGraphicsDevice* m_pGraphicsDevice;

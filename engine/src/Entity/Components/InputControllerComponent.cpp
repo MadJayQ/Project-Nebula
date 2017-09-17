@@ -49,14 +49,14 @@ void CInputControllerComponent::ProcessKeyInputAxis(ui32 ui32AxisKey)
 		pBindingFunc(pInputMapping->second);
 	}
 }
-void CInputControllerComponent::AddMovementInput(CVector3 vecInput)
+void CInputControllerComponent::AddMovementInput(CVector vecInput)
 {
 	m_vecAccumulatedInput += vecInput;
 }
 
-CVector3 CInputControllerComponent::ConsumeInputVector()
+CVector CInputControllerComponent::ConsumeInputVector()
 {
 	m_vecLastAccumulatedInput = m_vecAccumulatedInput;
-	m_vecAccumulatedInput = CVector3(0.f, 0.f, 0.f);
+	m_vecAccumulatedInput = CVector(0.f, 0.f);
 	return m_vecLastAccumulatedInput;
 }

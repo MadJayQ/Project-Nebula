@@ -30,11 +30,11 @@ void CMovementSubsystem::Tick(float flDeltaTime)
 		if (pInputComponent)
 		{
 			float flSpeedModifier = pMovementComponent->GetMaxSpeed();
-			CVector3 vecInput = pInputComponent->ConsumeInputVector();
+			CVector vecInput = pInputComponent->ConsumeInputVector();
 			pMovementComponent->SetVelocity(vecInput * flSpeedModifier);
 		}
 
-		v3 vecOldPosition = pPositionComponent->GetPositon();
+		v2 vecOldPosition = pPositionComponent->GetPositon();
 
 		//This is the insertion point for our collision-system
 		if (CCollisionComponent* pCollisionComponent = ent->GetComponent<CCollisionComponent>())

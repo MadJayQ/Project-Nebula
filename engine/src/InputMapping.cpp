@@ -1,6 +1,6 @@
 #include "InputMapping.h"
 
-void CInputMapping::CreateInputAxis(ui32 ui32KeyCode, const char* szAxisName, CVector3 vecAxisMultiplier)
+void CInputMapping::CreateInputAxis(ui32 ui32KeyCode, const char* szAxisName, CVector vecAxisMultiplier)
 {
 	m_inputMap[ui32KeyCode] = std::make_pair(
 		szAxisName,

@@ -19,7 +19,7 @@ public:
 	void Tick(float flDeltaTime);
 
 	template<class Entity>
-	Entity* SpawnEntity(CVector3 vecSpawnPos)
+	Entity* SpawnEntity(CVector vecSpawnPos)
 	{
 		Entity* ent = new Entity(
 			GenerateNextAvailableEID(),

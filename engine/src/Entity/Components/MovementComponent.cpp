@@ -3,7 +3,7 @@
 CMovementComponent::CMovementComponent()
 {
 	m_bAccelerates = false;
-	m_vecVelocity = CVector3(0.f, 0.f, 0.f);
+	m_vecVelocity = CVector(0.f, 0.f);
 }
 
 CMovementComponent::~CMovementComponent()
@@ -18,18 +18,17 @@ void CMovementComponent::ApplyMovement(CPositionComponent* pPositionComponent, f
 		m_vecVelocity += m_vecAcceleration;
 	}
 
-	CVector3& position = pPositionComponent->GetPositon();
+	CVector& position = pPositionComponent->GetPositon();
 	position._x += m_vecVelocity._x * flDeltaTime;
 	position._y += m_vecVelocity._y * flDeltaTime;
-	position._z = 0.f;
 }
 
-void CMovementComponent::SetAcceleration(CVector3 vecAcceleration)
+void CMovementComponent::SetAcceleration(CVector vecAcceleration)
 {
 	m_vecAcceleration = vecAcceleration;
 }
 
-void CMovementComponent::SetVelocity(CVector3 vecVelocity)
+void CMovementComponent::SetVelocity(CVector vecVelocity)
 {
 	m_vecVelocity = vecVelocity;
 }

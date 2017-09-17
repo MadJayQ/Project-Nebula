@@ -147,7 +147,7 @@ void CRenderSubsystem::DrawPoint(const b2Vec2& p, float32 size, const b2Color& c
 }
 
 //This function converts our floating point coordinates into pixel locations
-void CRenderSubsystem::TranslateRenderingRegion(const CVector3 position, SDL_Rect* pRect)
+void CRenderSubsystem::TranslateRenderingRegion(const CVector position, SDL_Rect* pRect)
 {
 	ui32 ui32ConvertedX = (ui32)(std::lroundf(position._x));
 	ui32 ui32ConvertedY = (ui32)(std::lroundf(position._y));
@@ -156,14 +156,14 @@ void CRenderSubsystem::TranslateRenderingRegion(const CVector3 position, SDL_Rec
 	pRect->y = ui32ConvertedY;
 }
 
-CVector3 CRenderSubsystem::GetEntInterpolatedPosition(CEntityBase* ent)
+CVector CRenderSubsystem::GetEntInterpolatedPosition(CEntityBase* ent)
 {
 	float flInterpolation = GetGlobalVars()->flInterpolation;
 	CPositionComponent* pPositionComponent = ent->GetComponent<CPositionComponent>();
 
-	v3 vecCurrentPos = pPositionComponent->GetPositon();
-	v3 vecLastPos = pPositionComponent->GetOldPosition();
-	v3 vecInterpolatedPos = Math::Lerp(vecLastPos, vecCurrentPos, flInterpolation);	
+	v2 vecCurrentPos = pPositionComponent->GetPositon();
+	v2 vecLastPos = pPositionComponent->GetOldPosition();
+	v2 vecInterpolatedPos = Math::Lerp(vecLastPos, vecCurrentPos, flInterpolation);	
 	return (ent->ShouldInterpolate()) ? vecInterpolatedPos : vecCurrentPos;
 }
 

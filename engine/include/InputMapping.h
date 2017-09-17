@@ -5,7 +5,7 @@
 
 #include "EngineMath.h"
 
-typedef std::pair<const char*, CVector3> InputAxisPair;
+typedef std::pair<const char*, CVector> InputAxisPair;
 typedef std::unordered_map<ui32, InputAxisPair> InputAxisMap;
 
 class CInputMapping
@@ -20,7 +20,7 @@ public:
 		return s_pInstance;
 	}
 
-	void CreateInputAxis(ui32 ui32KeyCode, const char* szAxisName, CVector3 vecAxisMultiplier);
+	void CreateInputAxis(ui32 ui32KeyCode, const char* szAxisName, CVector vecAxisMultiplier);
 	InputAxisPair* GetInputAxis(ui32 ui32KeyCode);
 
 	bool HasInputAxis(ui32 ui32KeyCode);

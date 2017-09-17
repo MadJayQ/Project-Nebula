@@ -44,22 +44,20 @@ public:
 	}
 
 	template<typename GivenUnits>
-	CVector3 ConvertToPixels(CVector3 vecInput)
+	CVector ConvertToPixels(CVector vecInput)
 	{
-		return CVector3(
+		return CVector(
 			ConvertToPixels<GivenUnits>(vecInput._x),
-			ConvertToPixels<GivenUnits>(vecInput._y),
-			0.f
+			ConvertToPixels<GivenUnits>(vecInput._y)
 		);
 	}
 
 	template<typename GivenUnits>
-	CVector3 ConvertFromPixels(CVector3 vecInput)
+	CVector ConvertFromPixels(CVector vecInput)
 	{
-		return CVector3(
+		return CVector(
 			ConvertFromPixels<GivenUnits>(vecInput._x),
-			ConvertFromPixels<GivenUnits>(vecInput._y),
-			0.f
+			ConvertFromPixels<GivenUnits>(vecInput._y)
 		);
 	}
 
