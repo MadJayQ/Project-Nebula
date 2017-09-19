@@ -22,7 +22,7 @@ EngineInstance::EngineInstance()
 
 EngineInstance::~EngineInstance()
 {
-	delete m_pGameWorld;
+	m_pGameWorld = NULL;
 }
 
 void EngineInstance::Initialize()
@@ -64,7 +64,7 @@ int EngineInstance::EngineLoop()
 	return 0;
 }
 
-void EngineInstance::Render()
+void EngineInstance::Update(float flDeltaTime)
 {
-
+	m_pGameWorld->Tick(flDeltaTime);
 }

@@ -40,8 +40,10 @@ public:
 
 
 public:
-	std::unique_ptr<b2BodyDef> m_pBodyDef;
-	std::unique_ptr<b2FixtureDef> m_pFixture;
+	b2BodyDef m_BodyDef;
+	b2FixtureDef m_FixtureDef;
+	b2Body* m_pBody;
+	b2Fixture* m_pFixture;
 
 private:
 	float m_flSpeed;

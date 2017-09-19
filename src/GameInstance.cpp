@@ -5,6 +5,7 @@
 #include "AssetLoader.h"
 #include "Player.h"
 #include "RenderSubsystem.h"
+#include "PhysicsSubsystem.h"
 
 namespace Global
 {
@@ -41,7 +42,10 @@ void GameInstance::CreateGameWindow()
 		m_pGameWindow.get()
 	);
 	m_pGraphicsDevice->CreateRenderer();
-	m_pGameWorld->CreateSubsystem<CRenderSubsystem>()->RegisterGraphicsDevice(m_pGraphicsDevice.get());
+	CRenderSubsystem* renderSystem = m_pGameWorld->CreateSubsystem<CRenderSubsystem>();
+	CPhysicsSubsystem* physicsSystem = m_pGameWorld->CreateSubsystem<CPhysicsSubsystem>();
+	renderSystem->RegisterGraphicsDevice(m_pGraphicsDevice.get());
+	physicsSystem->GetCollisionWorld()->SetDebugDraw(renderSystem);
 	g_pAssetLoader = std::make_unique<CAssetLoader>(m_pGraphicsDevice.get());
 	m_pOSMessageHandler = m_pGameWindow.get();
 
@@ -80,6 +84,7 @@ int GameInstance::EngineLoop()
 
 void GameInstance::Update(float flDeltaTime)
 {
+	EngineInstance::Update(flDeltaTime);
 }
 
 void GameInstance::Render()
@@ -88,6 +93,10 @@ void GameInstance::Render()
 	if (auto system = m_pGameWorld->GetSubsystem<CRenderSubsystem>())
 	{
 		system->Render();
+	}
+	if (auto pPhysicsSystem = m_pGameWorld->GetSubsystem<CPhysicsSubsystem>())
+	{
+		pPhysicsSystem->GetCollisionWorld()->DrawDebugData();
 	}
 	m_pGraphicsDevice->Present();
 }

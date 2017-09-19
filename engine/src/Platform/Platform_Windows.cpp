@@ -186,10 +186,13 @@ bool CWin32GameWindow::ProcessOSMessageLoop()
 		TranslateMessage(&g_lastMSG);
 		DispatchMessage(&g_lastMSG);
 	}
-	if (g_lastMSG.message == WM_QUIT)
+	SDL_Event e;
+	while (SDL_PollEvent(&e) != 0) 
 	{
-		//Kill that shit my dude
-		return false;
+		if (e.type == SDL_QUIT)
+		{
+			return false;
+		}
 	}
 	return true;
 }

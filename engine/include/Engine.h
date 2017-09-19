@@ -18,8 +18,8 @@ public:
 	virtual void Initialize();
 	virtual int EngineLoop();
 
-	virtual void Update(float flDeltaTime) = 0;
-	virtual void Render();
+	virtual void Update(float flDeltaTime);
+	virtual void Render() = 0;
 
 	virtual void CreateInputMapping() = 0; //Change this to have engine default input mappings??
 protected:

@@ -1,6 +1,5 @@
 #pragma once
 #include "GameSubsystem.h"
-#include "CollisionComponent.h"
 #include "Box2D.h"
 
 class CPhysicsSubsystem : public IGameSubsystem

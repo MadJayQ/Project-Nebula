@@ -3,6 +3,7 @@
 #include "PositionComponent.h"
 #include "PhysicsComponent.h"
 #include "InputControllerComponent.h"
+#include "UnitMetrics.h"
 
 b2Vec2 WFVectorToB2Vector(const CVector& in)
 {
@@ -11,6 +12,7 @@ b2Vec2 WFVectorToB2Vector(const CVector& in)
 
 CPhysicsSubsystem::CPhysicsSubsystem()
 {
+	CUnitMetrics::Instance()->SetPixelsPerMeter(32.f);
 	m_pCollisionWorld = std::make_unique<b2World>(
 		b2Vec2(
 			0.0f,

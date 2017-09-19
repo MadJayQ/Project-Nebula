@@ -9,6 +9,7 @@ CPlayer::CPlayer(ui32 ui32EntityID, CGameWorld* pGameWorld)
 {
 	m_pRenderComponent = AddComponent<C2DRenderComponent>();
 	m_pPositionComponent = AddComponent<CPositionComponent>();
+	m_pPhysicsComponent = AddComponent<CPhysicsComponent>();
 
 	pGameWorld->RegisterEntityToSubsystems<CRenderSubsystem, CPhysicsSubsystem>(this);
 	
@@ -18,6 +19,27 @@ CPlayer::CPlayer(ui32 ui32EntityID, CGameWorld* pGameWorld)
 			SPRITE_FILE_TYPE_PNG
 		)
 	);
+
+
+	m_pPhysicsComponent->m_BodyDef.type = b2_dynamicBody;
+	m_pPhysicsComponent->m_BodyDef.fixedRotation = true;
+	m_pPhysicsComponent->m_BodyDef.gravityScale = 0.0f;
+	m_pPhysicsComponent->m_BodyDef.angularVelocity = 0.f;
+	auto pCollisionWorld = pGameWorld->GetSubsystem<CPhysicsSubsystem>()->GetCollisionWorld();
+	m_pPhysicsComponent->m_pBody = pCollisionWorld->CreateBody(
+		&m_pPhysicsComponent->m_BodyDef
+	);
+
+	
+	b2PolygonShape shape;
+	shape.SetAsBox(1.f, 2.f);
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.friction = 0.f;
+	fixtureDef.shape = &shape;
+	m_pPhysicsComponent->m_pFixture = m_pPhysicsComponent->m_pBody->CreateFixture(&fixtureDef);
+	m_pPhysicsComponent->SetVelocity(v2(0.5f, 0.5f));
+	
 	m_bInterpolate = true;
 }
 

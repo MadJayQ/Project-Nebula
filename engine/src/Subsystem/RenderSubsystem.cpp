@@ -55,9 +55,9 @@ void CRenderSubsystem::Render()
 			{
 				CVector vecCurrentPosition;
 				CVector vecOldPosition;
-				if (pPhysicsComponent->m_pBodyDef && ent->ShouldInterpolate())
+				if (pPhysicsComponent->m_pBody)
 				{
-					auto b2vecSimulatedPosition = pPhysicsComponent->m_pBodyDef->position;
+					auto b2vecSimulatedPosition = pPhysicsComponent->m_pBody->GetPosition();
 					pPositionComponent->SetPosition(
 						v2(
 							b2vecSimulatedPosition.x,
@@ -65,7 +65,7 @@ void CRenderSubsystem::Render()
 						)
 					);
 					TranslateRenderingRegion(
-						GetEntInterpolatedPosition(ent),
+						ent->ShouldInterpolate() ? GetEntInterpolatedPosition(ent) : pPositionComponent->GetPosition(),
 						&renderingRegion
 					);
 					pPositionComponent->SetOldPosition(
