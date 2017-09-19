@@ -1,12 +1,14 @@
 #include "Engine.h"
 #include "Timer.h"
 #include "GlobalVars.h"
+#include "AssetLoader.h"
 
 float flTimeAccumulator = 0.f;
 float flLastTime = 0.0f;
 
 std::unique_ptr<CGlobalVars> g_pGlobalVars;
 std::unique_ptr<CTimer> g_pTimer;
+
 
 CGlobalVars* GetGlobalVars()
 {
@@ -15,11 +17,12 @@ CGlobalVars* GetGlobalVars()
 
 EngineInstance::EngineInstance()
 {
+	m_pGameWorld = new CGameWorld();
 }
 
 EngineInstance::~EngineInstance()
 {
-
+	delete m_pGameWorld;
 }
 
 void EngineInstance::Initialize()
@@ -59,4 +62,9 @@ int EngineInstance::EngineLoop()
 	}
 	//Perform cleanup
 	return 0;
+}
+
+void EngineInstance::Render()
+{
+
 }

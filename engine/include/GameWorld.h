@@ -90,7 +90,10 @@ private:
 			static void exec(CGameWorld* pThis, CEntityBase* ent)
 			{
 				auto pSubsystem = pThis->GetSubsystem<T>();
-				if (!pSubsystem) pThis->CreateSubsystem<T>();
+				if (pSubsystem == NULL)
+				{
+					pSubsystem = pThis->CreateSubsystem<T>();
+				}
 				pSubsystem->RegisterEntity(ent);
 			}
 		};
