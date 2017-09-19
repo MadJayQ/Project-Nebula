@@ -1,5 +1,8 @@
 #include "PhysicsSubsystem.h"
 
+#include "PositionComponent.h"
+#include "PhysicsComponent.h"
+#include "InputControllerComponent.h"
 
 b2Vec2 WFVectorToB2Vector(const CVector& in)
 {
@@ -23,6 +26,25 @@ CPhysicsSubsystem::~CPhysicsSubsystem()
 
 void CPhysicsSubsystem::Tick(float flDeltaTime)
 {
+	for (auto& ent : m_registeredEntities)
+	{
+		CPositionComponent* pPositionComponent = ent->GetComponent<CPositionComponent>();
+		CPhysicsComponent* pPhysicsComponent = ent->GetComponent<CPhysicsComponent>();
+
+		if (!pPositionComponent || !pPhysicsComponent)
+		{
+			//Why tf is this entity attached to this subsystem???
+			continue;
+		}
+		if (CInputControllerComponent* pInputComponent = ent->GetComponent<CInputControllerComponent>())
+		{
+			float flSpeedMod = pPhysicsComponent->GetMaxSpeed();
+			CVector vecInput = pInputComponent->ConsumeInputVector();
+			pPhysicsComponent->SetVelocity(
+				vecInput * flSpeedMod
+			);
+		}
+	}
 	m_pCollisionWorld->Step(
 		flDeltaTime,
 		24,

@@ -18,7 +18,7 @@ void CMovementComponent::ApplyMovement(CPositionComponent* pPositionComponent, f
 		m_vecVelocity += m_vecAcceleration;
 	}
 
-	CVector& position = pPositionComponent->GetPositon();
+	CVector& position = pPositionComponent->GetPosition();
 	position._x += m_vecVelocity._x * flDeltaTime;
 	position._y += m_vecVelocity._y * flDeltaTime;
 }

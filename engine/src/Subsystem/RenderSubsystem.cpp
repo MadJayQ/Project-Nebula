@@ -1,6 +1,7 @@
 #include "RenderSubsystem.h"
 #include "2DRenderComponent.h"
 #include "PositionComponent.h"
+#include "PhysicsComponent.h"
 #include "GlobalVars.h"
 #include "UnitMetrics.h"
 
@@ -49,10 +50,37 @@ void CRenderSubsystem::Render()
 			auto pHardwareRenderer = m_pGraphicsDevice->GetHardwareRenderer();
 			auto pSprite = pRenderComponent->GetSprite();
 			SDL_Rect renderingRegion = pRenderComponent->GetSprite()->GetRenderingRect();
-			TranslateRenderingRegion(
-				GetEntInterpolatedPosition(ent),
-				&renderingRegion
-			);
+			
+			if (CPhysicsComponent* pPhysicsComponent = ent->GetComponent<CPhysicsComponent>())
+			{
+				CVector vecCurrentPosition;
+				CVector vecOldPosition;
+				if (pPhysicsComponent->m_pBodyDef && ent->ShouldInterpolate())
+				{
+					auto b2vecSimulatedPosition = pPhysicsComponent->m_pBodyDef->position;
+					pPositionComponent->SetPosition(
+						v2(
+							b2vecSimulatedPosition.x,
+							b2vecSimulatedPosition.y
+						)
+					);
+					TranslateRenderingRegion(
+						GetEntInterpolatedPosition(ent),
+						&renderingRegion
+					);
+					pPositionComponent->SetOldPosition(
+						pPositionComponent->GetPosition()
+					);
+				}
+			}
+			else
+			{
+				TranslateRenderingRegion(
+					ent->ShouldInterpolate() ? GetEntInterpolatedPosition(ent) : pPositionComponent->GetPosition(),
+					&renderingRegion
+				);
+			}
+
 			if (pSprite->GetTexture() == NULL) continue;
 			SDL_RenderCopy(
 				pHardwareRenderer,
@@ -149,8 +177,8 @@ void CRenderSubsystem::DrawPoint(const b2Vec2& p, float32 size, const b2Color& c
 //This function converts our floating point coordinates into pixel locations
 void CRenderSubsystem::TranslateRenderingRegion(const CVector position, SDL_Rect* pRect)
 {
-	ui32 ui32ConvertedX = (ui32)(std::lroundf(position._x));
-	ui32 ui32ConvertedY = (ui32)(std::lroundf(position._y));
+	ui32 ui32ConvertedX = (ui32)(std::lround(position._x));
+	ui32 ui32ConvertedY = (ui32)(std::lround(position._y));
 
 	pRect->x = ui32ConvertedX;
 	pRect->y = ui32ConvertedY;
@@ -161,10 +189,10 @@ CVector CRenderSubsystem::GetEntInterpolatedPosition(CEntityBase* ent)
 	float flInterpolation = GetGlobalVars()->flInterpolation;
 	CPositionComponent* pPositionComponent = ent->GetComponent<CPositionComponent>();
 
-	v2 vecCurrentPos = pPositionComponent->GetPositon();
+	v2 vecCurrentPos = pPositionComponent->GetPosition();
 	v2 vecLastPos = pPositionComponent->GetOldPosition();
 	v2 vecInterpolatedPos = Math::Lerp(vecLastPos, vecCurrentPos, flInterpolation);	
-	return (ent->ShouldInterpolate()) ? vecInterpolatedPos : vecCurrentPos;
+	return  vecInterpolatedPos;
 }
 
 

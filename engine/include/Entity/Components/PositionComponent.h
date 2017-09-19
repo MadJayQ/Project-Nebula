@@ -9,7 +9,7 @@ public:
 	CPositionComponent();
 	~CPositionComponent();
 
-	CVector& GetPositon()
+	CVector& GetPosition()
 	{
 		return m_vecPosition;
 	}
