@@ -4,6 +4,7 @@
 #include "2DRenderComponent.h"
 #include "PositionComponent.h"
 #include "PhysicsComponent.h"
+#include "InputControllerComponent.h"
 
 class CPlayer : public CEntityBase
 {
@@ -15,5 +16,6 @@ protected:
 	C2DRenderComponent* m_pRenderComponent;
 	CPositionComponent* m_pPositionComponent;
 	CPhysicsComponent* m_pPhysicsComponent;
+	CInputControllerComponent* m_pInputComponent;
 
 };

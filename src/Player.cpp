@@ -2,6 +2,7 @@
 
 #include "RenderSubsystem.h"
 #include "PhysicsSubsystem.h"
+#include "InputSubsystem.h"
 #include "GameWorld.h"
 
 CPlayer::CPlayer(ui32 ui32EntityID, CGameWorld* pGameWorld) 
@@ -10,8 +11,9 @@ CPlayer::CPlayer(ui32 ui32EntityID, CGameWorld* pGameWorld)
 	m_pRenderComponent = AddComponent<C2DRenderComponent>();
 	m_pPositionComponent = AddComponent<CPositionComponent>();
 	m_pPhysicsComponent = AddComponent<CPhysicsComponent>();
+	m_pInputComponent = AddComponent<CInputControllerComponent>();
 
-	pGameWorld->RegisterEntityToSubsystems<CRenderSubsystem, CPhysicsSubsystem>(this);
+	pGameWorld->RegisterEntityToSubsystems<CRenderSubsystem, CInputSubsystem, CPhysicsSubsystem>(this);
 	
 	m_pRenderComponent->SetSprite(
 		new CSprite(
@@ -38,7 +40,6 @@ CPlayer::CPlayer(ui32 ui32EntityID, CGameWorld* pGameWorld)
 	fixtureDef.friction = 0.f;
 	fixtureDef.shape = &shape;
 	m_pPhysicsComponent->m_pFixture = m_pPhysicsComponent->m_pBody->CreateFixture(&fixtureDef);
-	m_pPhysicsComponent->SetVelocity(v2(0.5f, 0.5f));
 	
 	m_bInterpolate = true;
 }

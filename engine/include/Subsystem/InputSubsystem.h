@@ -19,4 +19,5 @@ public:
 private:
 	std::queue<CKeyInputEvent> m_aggregatedInput;
 	std::set<ui32> m_pressedAxisKeys;
+	std::set<ui32> m_pressedActionKeys;
 };

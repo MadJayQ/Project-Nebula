@@ -7,6 +7,7 @@
 
 typedef std::pair<const char*, CVector> InputAxisPair;
 typedef std::unordered_map<ui32, InputAxisPair> InputAxisMap;
+typedef std::unordered_map<ui32, const char*> InputActionMap;
 
 class CInputMapping
 {
